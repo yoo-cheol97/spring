@@ -10,6 +10,7 @@ pageEncoding="UTF-8"%>
     <script type="text/javascript" src="/js/test.js"></script>
   </head>
   <body>
-    <h1>박승재입니다</h1>
+    <h1>안녕하세요</h1>
+    <p>반갑습니다. ${age}살 ${myname} ${gender}입니다</p>
   </body>
 </html>
