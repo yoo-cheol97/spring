@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.board.dao.BoardDao;
 import com.ktdsuniversity.edu.board.vo.BoardVO;
-import com.ktdsuniversity.edu.board.vo.SearchResultVO;
+import com.ktdsuniversity.edu.board.vo.request.WriteVO;
+import com.ktdsuniversity.edu.board.vo.response.SearchResultVO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -19,18 +20,65 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDao boardDao;
 	
 	@Override
-	public SearchResultVO findAllBoard() {
+	public SearchResultVO findAllBoard() {           
+		SearchResultVO result = new SearchResultVO();
+		
 		// 게시글 개수 조회
 		int count = this.boardDao.selectBoardCount();
+		result.setCount(count);
+		
+		if (count == 0) {
+			return result;
+		}
 		
 		// 게시글 목록 조회
 		List<BoardVO> list = this.boardDao.selectBoardList();
 		
-		SearchResultVO result = new SearchResultVO();
 		result.setResult(list);
-		result.setCount(count);
 		
 		return result;
+	}
+	
+	@Override
+	public boolean createNewBoard(WriteVO writeVO) {
+		// dao => insert 요청
+		// mybatis는 insert, update, delete를 수행했을 때
+		// 영향을 받은 row의 수를 반환시킨다
+		// 예> insert ==> insert된 row의 개수 반환
+		// 예> update ==> update된 row의 개수 반환
+		// 예> delete ==> delete된 row의 개수 반환
+		int insertCount = this.boardDao.insertNewBoard(writeVO);
+		System.out.println("생성된 게시글의 개수? " + insertCount);
+		return insertCount == 1;
+	}
+	
+	@Override
+	public BoardVO findBoardByBoardId(String boardId) {
+		// 1. 조회수 증가
+		int updateCount = this.boardDao.updateViewCntIncreaseById(boardId);
+		System.out.println("조회수가 증가된 게시글의 수: " + updateCount);
+		
+		if(updateCount == 0) {
+			// 존재하지 않는 게시글을 조회하려 했다
+			return null;
+			
+//			throw new RuntimeException("존재하지 않는 게시글입니다");
+		}
+		
+		
+		// 2. 게시글 조회
+		BoardVO board = this.boardDao.selectBoardById(boardId);
+		
+		// 조회한 게시글을 반환
+		return board;
+	}
+
+	@Override
+	public boolean deleteBoardByArticleId(String id) {
+		int deleteCount = this.boardDao.deleteBoardByArticleId(id);
+		System.out.println(deleteCount);
+		
+		return deleteCount == 1;
 	}
 	
 	
