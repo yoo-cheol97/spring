@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.board.dao.BoardDao;
+import com.ktdsuniversity.edu.board.enums.ReadType;
 import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.board.vo.request.WriteVO;
 import com.ktdsuniversity.edu.board.vo.response.SearchResultVO;
 
@@ -53,8 +55,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public BoardVO findBoardByBoardId(String boardId) {
+	public BoardVO findBoardByBoardId(String boardId, ReadType readType) {
 		// 1. 조회수 증가
+		
+		if(readType == ReadType.VIEW) {
+		
 		int updateCount = this.boardDao.updateViewCntIncreaseById(boardId);
 		System.out.println("조회수가 증가된 게시글의 수: " + updateCount);
 		
@@ -64,7 +69,8 @@ public class BoardServiceImpl implements BoardService {
 			
 //			throw new RuntimeException("존재하지 않는 게시글입니다");
 		}
-		
+			
+		}
 		
 		// 2. 게시글 조회
 		BoardVO board = this.boardDao.selectBoardById(boardId);
@@ -81,6 +87,10 @@ public class BoardServiceImpl implements BoardService {
 		return deleteCount == 1;
 	}
 	
+	public boolean updateBoardByBoardId(UpdateVO updateVO) {
+		int updateCount = this.boardDao.updateboardById(updateVO);
+		return updateCount ==1;
+	}
 	
 
 }

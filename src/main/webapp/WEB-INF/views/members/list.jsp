@@ -10,8 +10,8 @@ pageEncoding="UTF-8"%>
 </head>
 <body>
 	<div class="grid list">
-		<h1>게시글 목록</h1>
-		<div>총 ${searchCount}개의 게시글이 검색되었습니다.</div>
+		<h1>회원목록</h1>
+		<div>총 ${searchCountM}개의 게시글이 검색되었습니다.</div>
 		<!-- HTML 주석: 브라우저 개발자 도구에서 노출되는 주석. -->
 		<%-- JSP 주석: 브라우저 개발자 도구에서 노출되지 않는 주석. --%>
 		<%--
@@ -30,29 +30,25 @@ pageEncoding="UTF-8"%>
 			</colgroup>
 			<thead>
 				<tr>
-					<th>번호</th>
-					<th>제목</th>
 					<th>이메일</th>
-					<th>조회수</th>
-					<th>등록일</th>
-					<th>수정일</th>
+					<th>이름</th>
+					<th>비밀번호</th>
 				</tr>
 			</thead>
 			<tbody>
 				<!-- searchResult가 존재하지 않으면, "검색된 데이터가 없습니다"를 보여주고 -->
 				<c:choose>
-					<c:when test="${not empty searchResult}">
+					<c:when test="${not empty searchResultM}">
 					<!-- searchResult가 존재하면, 반복하여 데이터를 보여주고 -->
-						<c:forEach items="${searchResult}" var="board">
+						<c:forEach items="${searchResultM}" var="members">
 							<tr>
-								<td>${board.id}</td>
-								<td>
+								<td>${members.email}</td>
+							<%-- 	<td>
 								<a href="/view/${board.id}">${board.subject}</a>
 								</td>
-								<td>${board.email}</td>
-								<td>${board.viewCnt}</td>
-								<td>${board.crtDt}</td>
-								<td>${board.mdfyDt}</td>
+								 --%>
+								<td>${members.name}</td>
+								<td>${members.password}</td>
 							</tr>
 						</c:forEach>
 					</c:when>
@@ -63,22 +59,12 @@ pageEncoding="UTF-8"%>
 					</tr>
 					</c:otherwise>
 				</c:choose>
-				<!-- searchResult가 존재하면, 반복하여 데이터를 보여주고 -->
-				<c:forEach items="${searchResult}" var="board">
-					<tr>
-						<td>${board.id}</td>
-						<td><a href="/view/${board.id}">${board.subject}</a></td>
-						<td>${board.email}</td>
-						<td>${board.viewCnt}</td>
-						<td>${board.crtDt}</td>
-						<td>${board.mdfyDt}</td>
-					</tr>
-				</c:forEach>
+				
 			</tbody>
 		</table>
 		<div class="btn-group">
 			<div class="right-align">
-				<a href="/write">새로운 게시글 작성</a>
+				<a href="/regist">새로운 게시글 작성</a>
 			</div>
 		</div>
 	</div>

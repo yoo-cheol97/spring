@@ -73,5 +73,14 @@
 	DELETE BOARD
 	 WHERE ID = #{_parameter}
 	</delete>
-
+	<update id="updateboardById" parameterType="com.ktdsuniversity.edu.board.vo.request.UpdateVO">
+	UPDATE SPRING_BOOT.BOARD
+       SET SUBJECT=#{subject}
+         , CONTENT=#{content}
+         , EMAIL=#{email}
+         , MDFY_DT= SYSDATE
+     WHERE ID=#{id}
+	</update>
+   
+    
 </mapper>

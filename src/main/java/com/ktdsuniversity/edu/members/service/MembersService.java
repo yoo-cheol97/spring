@@ -1,9 +1,20 @@
 package com.ktdsuniversity.edu.members.service;
 
-import com.ktdsuniversity.edu.members.vo.request.MembersVO;
+import com.ktdsuniversity.edu.members.vo.MembersVO;
+import com.ktdsuniversity.edu.members.vo.request.RegistVO;
+import com.ktdsuniversity.edu.members.vo.request.UpdateVO;
+import com.ktdsuniversity.edu.members.vo.response.SearchResultMVO;
 
 public interface MembersService {
 
-	boolean createNewMember(MembersVO membersVO);
+	boolean createNewMember(RegistVO registVO);
+
+	MembersVO findMemberByEmail(String email);
+
+	boolean updateMemberByEmail(UpdateVO updateVO);
+
+	boolean deleteMemberByEmail(String email);
+
+	SearchResultMVO findAllMembers();
 
 }

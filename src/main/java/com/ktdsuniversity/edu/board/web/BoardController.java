@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ktdsuniversity.edu.board.enums.ReadType;
 import com.ktdsuniversity.edu.board.service.BoardService;
 import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.board.vo.request.WriteVO;
 import com.ktdsuniversity.edu.board.vo.response.SearchResultVO;
 
@@ -76,7 +78,7 @@ public class BoardController {
 		
 		// boardId로 데이터베이스에서 게시글을 조회한다
 		// 조회할 때 조회수가 하나 증가해야 한다
-		BoardVO findResult = this.boardService.findBoardByBoardId(boardId);
+		BoardVO findResult = this.boardService.findBoardByBoardId(boardId, ReadType.VIEW);
 		
 		model.addAttribute("article",findResult);
 		
@@ -90,6 +92,23 @@ public class BoardController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/update/{articleId}")
+	public String viewUpdatePage(@PathVariable String articleId, Model model) {
+		BoardVO data = this.boardService.findBoardByBoardId(articleId, ReadType.UPDATE);
+		model.addAttribute("article", data);
+		
+		return "board/update";
+	}
 	
+	@PostMapping("/update/{articleId}")
+	public String doUpdateAction(@PathVariable String articleId, UpdateVO updateVO) {
+		
+		updateVO.setId(articleId);
+		
+		boolean updateResult = this.boardService.updateBoardByBoardId(updateVO);
+		System.out.println("수정 성공? " + updateResult);
+		
+		return "redirect:/view/" + articleId;
+	}
 
 }
