@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.movie.dao.MovieDao">
+
+    <select id="selectMovieList" resultType="com.ktdsuniversity.edu.movie.vo.MovieVO">
+        SELECT MOVIE_ID
+             , TITLE
+             , TO_CHAR(OPEN_DATE, 'YYYY-MM-DD')
+             , RUNNING_TIME
+             , STATE
+             , LANGUAGE
+             , INTRODUCE
+        FROM MOVIE
+    </select>
+
+    <insert id="insertMovie" parameterType="com.ktdsuniversity.edu.movie.vo.MovieVO">
+        INSERT INTO SPRING_BOOT.MOVIE
+        (MOVIE_ID, TITLE, OPEN_DATE, RUNNING_TIME, STATE, LANGUAGE, INTRODUCE)
+        VALUES
+        ('MV-' || TO_CHAR(SYSDATE, 'YYYYMMDD-') || LPAD(SEQ_BOARD_PK.NEXTVAL, 6, '0'),
+         #{title},
+         SYSDATE,
+         #{runningTime},
+         #{state},
+         #{language},
+         #{introduce})
+    </insert>
+
+</mapper>

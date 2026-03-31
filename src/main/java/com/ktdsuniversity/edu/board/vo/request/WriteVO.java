@@ -1,5 +1,9 @@
 package com.ktdsuniversity.edu.board.vo.request;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * 게시글 등록을 위해
  * 브라우저에서 컨트롤러(앤드포인트)로 전송되는 파라미터를 받아오기 위한 클래스
@@ -8,10 +12,22 @@ package com.ktdsuniversity.edu.board.vo.request;
  * setter를 이용
  */
 public class WriteVO {
+	
+	private String id;
+	
 	private String subject;
 	private String email;
 	private String content;
 	
+	private List<MultipartFile> attachFile; // 업로드 한 건 항상 MultipartFile로 가져온다
+	
+	
+	public String getId() {
+		return this.id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getSubject() {
 		return this.subject;
 	}
@@ -29,6 +45,12 @@ public class WriteVO {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public List<MultipartFile> getAttachFile() {
+		return this.attachFile;
+	}
+	public void setAttachFile(List<MultipartFile> attachFile) {
+		this.attachFile = attachFile;
 	}
 	
 	

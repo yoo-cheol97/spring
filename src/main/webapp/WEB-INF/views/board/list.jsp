@@ -63,17 +63,7 @@ pageEncoding="UTF-8"%>
 					</tr>
 					</c:otherwise>
 				</c:choose>
-				<!-- searchResult가 존재하면, 반복하여 데이터를 보여주고 -->
-				<c:forEach items="${searchResult}" var="board">
-					<tr>
-						<td>${board.id}</td>
-						<td><a href="/view/${board.id}">${board.subject}</a></td>
-						<td>${board.email}</td>
-						<td>${board.viewCnt}</td>
-						<td>${board.crtDt}</td>
-						<td>${board.mdfyDt}</td>
-					</tr>
-				</c:forEach>
+				
 			</tbody>
 		</table>
 		<div class="btn-group">

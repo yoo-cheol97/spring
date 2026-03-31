@@ -24,3 +24,16 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+      
+#spring:
+#  datasource:
+#    url: jdbc:oracle:thin:@localhost:1521:XE
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
+#    username: SPRING_BOOT
+#    password: 1234
+#   application:
+#    name: hello-spring
+#  mvc:
+#   view:
+#     prefix: /WEB-INF/views/
+#     suffix: .jsp
