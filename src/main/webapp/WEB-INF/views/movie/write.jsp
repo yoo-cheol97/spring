@@ -57,6 +57,13 @@
                 name="introduce"
                 placeholder="영화 소개"
             ></textarea>
+            
+           
+            <label for="attach-files">영화 포스터 첨부파일</label>
+        <div id="attach-files" class="attach-files">
+          <input type="file" name="attachFile" />
+          <button type="button" class="add-file">➕</button>
+        </div>
 
             <div class="btn-group">
                 <div class="right-align">

@@ -3,6 +3,7 @@ package com.ktdsuniversity.edu.board.vo;
 import java.util.List;
 
 import com.ktdsuniversity.edu.files.vo.FilesVO;
+import com.ktdsuniversity.edu.members.vo.MembersVO;
 
 public class BoardVO {
 	
@@ -15,10 +16,12 @@ public class BoardVO {
 	private String mdfyDt;
 	private String fileName;
 	private String originFileName;
+	private String fileGroupId;
+	
+	private MembersVO membersVO;
 	
 	private List<FilesVO> files;
 
-	
 	
 	public List<FilesVO> getFiles() {
 		return this.files;
@@ -80,5 +83,18 @@ public class BoardVO {
 	public void setOriginFileName(String originFileName) {
 		this.originFileName = originFileName;
 	}
+	public String getFileGroupId() {
+		return this.fileGroupId;
+	}
+	public void setFileGroupId(String fileGroupId) {
+		this.fileGroupId = fileGroupId;
+	}
+	public MembersVO getMembersVO() {
+		return this.membersVO;
+	}
+	public void setMembersVO(MembersVO membersVO) {
+		this.membersVO = membersVO;
+	}
+	
 	
 }

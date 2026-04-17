@@ -1,34 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>게시글 작성</title>
-    <script type="text/javascript" src="/js/jquery-4.0.0.slim.min.js"></script>
-    <script type="text/javascript" src="\js\board.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/hello-spring.css" />
-  </head>
-  <body>
+pageEncoding="UTF-8"%> <%@ taglib prefix="form"
+uri="http://www.springframework.org/tags/form" %>
+<jsp:include page="/WEB-INF/views/templates/header.jsp">
+    <jsp:param value="게시글 작성" name="title" />
+    <jsp:param value="<script type='text/javascript' src='/js/board.js'></script>" 
+                              name="scripts" />
+</jsp:include>
     <h1>게시글 작성</h1>
     <!-- action ==> form 내부의 value를 전송할 앤드포인트 -->
-    <form method="post" action="/write" enctype="multipart/form-data">
+    <!-- form:form modelAttribute ==> form태그 내부의 input, textarea, select등을 
+                                      컨트롤러 보내기 위한 아이디 보편적으로 변수의 이름(엔드포인트의) -->
+    <form:form
+      modelAttribute="writeVO"
+      method="post"
+      action="/write"
+      enctype="multipart/form-data"
+    >
       <div class="grid write">
         <label for="subject">제목</label>
-        <input
-          id="subject"
-          type="text"
-          name="subject"
-          placeholder="제목을 입력하세요"
-        />
+        <div class="input-div">
+          <input
+            id="subject"
+            type="text"
+            name="subject"
+            placeholder="제목을 입력하세요"
+            value="${inputData.subject}"
+          />
+          <form:errors path="subject" />
+        </div>
 
-        <label for="email">이메일</label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          placeholder="이메일을 입력하세요"
-        />
         <label for="attach-files">첨부파일</label>
         <div id="attach-files" class="attach-files">
           <input type="file" name="attachFile" />
@@ -36,11 +36,9 @@ pageEncoding="UTF-8"%>
         </div>
 
         <label for="content">내용</label>
-        <textarea
-          id="content"
-          name="content"
-          placeholder="내용을 입력하세요"
-        ></textarea>
+        <textarea id="content" name="content" placeholder="내용을 입력하세요">
+${inputData.content}</textarea
+        >
 
         <div class="btn-group">
           <div class="right-align">
@@ -48,6 +46,5 @@ pageEncoding="UTF-8"%>
           </div>
         </div>
       </div>
-    </form>
-  </body>
-</html>
+    </form:form>
+<jsp:include page="/WEB-INF/views/templates/footer.jsp"></jsp:include>

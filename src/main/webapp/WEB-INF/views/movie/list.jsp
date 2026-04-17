@@ -57,7 +57,7 @@
 
 		<div class="btn-group">
 			<div class="right-align">
-				<a href="/movie/writeM">영화 등록</a>
+				<a href="/writeM">영화 등록</a>
 			</div>
 		</div>
 	</div>

@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ktdsuniversity.edu.members.vo.MembersVO;
+import com.ktdsuniversity.edu.members.vo.request.LoginVO;
+import com.ktdsuniversity.edu.members.vo.request.MemberSearchVO;
 import com.ktdsuniversity.edu.members.vo.request.RegistVO;
 import com.ktdsuniversity.edu.members.vo.request.UpdateVO;
 
@@ -19,9 +21,17 @@ public interface MembersDao {
 
 	int deleteMemberByEmail(String email);
 
-	int selectCountMember();
+	int selectMembersCount(MemberSearchVO membersSearchVO);
 
-	List<MembersVO> selectMemberList();
+	List<MembersVO> selectMembersList(MemberSearchVO membersSearchVO);
+
+	int updateIncreaseLoginFailCount(String email);
+
+	int updateBlock(String email);
+
+	int updateSuccessLogin(LoginVO loginVO);
+
+	List<String> selectMemberRolesByEmail(String email);
 	
 
 }

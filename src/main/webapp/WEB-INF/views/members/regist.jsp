@@ -1,40 +1,76 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>회원 가입</title>
-    <link rel="stylesheet" type="text/css" href="/css/hello-spring.css" />
-  </head>
-  <body>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<jsp:include page="/WEB-INF/views/templates/header.jsp">
+    <jsp:param value="회원 가입" name="title" />
+     <jsp:param value="<script type='text/javascript' src='/js/members.js'></script>" 
+                              name="scripts" />
+</jsp:include>
     <h1>회원 가입</h1>
     <!-- action ==> form 내부의 value를 전송할 엔드포인트 -->
-    <form method="post" action="/login">
-      <div class="grid regist">
+    <form:form
+      modelAttribute="registVO"
+      method="post"
+      action="/regist"
+      enctype="multipart/form-data"
+    >
+      <div class="input-div">
         <label for="email">이메일</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="이메일을 입력하세요."
-        />
+        <div class="input-div">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="이메일을 입력하세요."
+            value="${inputData.email}${errorData.email}"
+          />
+          <c:if test="${not empty errorMessage}">
+            <div class="validation-error">${errorMessage}</div>
+          </c:if>
+          <form:errors path="email" cssClass="validation-error" element="div" />
+        </div>
 
         <label for="name">이름</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="이름을 입력하세요."
-        />
+        <div class="input-div">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="이름을 입력하세요."
+            value="${inputData.name}${errorData.name}"
+          />
+          <form:errors path="name" cssClass="validation-error" element="div" />
+        </div>
 
         <label for="password">비밀번호</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="비밀번호를 입력하세요."
-        />
+        <div class="input-div">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="비밀번호를 입력하세요."
+            value="${inputData.password}${errorData.password}"
+          />
+          <form:errors
+            path="password"
+            cssClass="validation-error"
+            element="div"
+          />
+        </div>
+        <!-- 비밀번호 두 번 입력하기 -->
+         <label for="confirm-password">비밀번호 확인</label>
+         <div class="input-div">
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+          />
+
+
+        <!-- 비밀번호 한 번 입력하기 ==> 비밀번호를 확인하는 기능 -->
+        <label for="show-password">비밀번호 보기</label>
+        <input type="checkbox" id="show-password" />
 
         <div class="btn-group">
           <div class="right-align">
@@ -42,6 +78,5 @@ pageEncoding="UTF-8"%>
           </div>
         </div>
       </div>
-    </form>
-  </body>
-</html>
+    </form:form>
+<jsp:include page="/WEB-INF/views/templates/footer.jsp"></jsp:include>

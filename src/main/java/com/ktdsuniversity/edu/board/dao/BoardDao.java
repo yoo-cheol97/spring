@@ -5,26 +5,29 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.request.SearchListVO;
 import com.ktdsuniversity.edu.board.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.board.vo.request.WriteVO;
 
 @Mapper
 public interface BoardDao {
 
-	int selectBoardCount();
+	int selectBoardCount(SearchListVO searchListVO);
 
-	List<BoardVO> selectBoardList();
-
-	
-	
-	BoardVO selectBoardById(String boardId);
-
-	int updateViewCntIncreaseById(String boardId);
+	List<BoardVO> selectBoardList(SearchListVO searchListVO);
 
 	int insertNewBoard(WriteVO writeVO);
-	
-	int deleteBoardByArticleId(String boardId);
 
-	int updateboardById(UpdateVO updateVO);
+	BoardVO selectBoardById(String articleId);
+
+	int updateViewCntIncreaseById(String articleId);
+
+	int deleteBoardById(String id);
+
+	int updateBoardById(UpdateVO updateVO);
+	
+	List<String> selectFileInBoard();
+
+	int deleteAllBoard();
 
 }

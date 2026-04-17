@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.4</version>
+        <version>4.0.5</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ktdsuniversity.edu</groupId>
@@ -32,13 +32,85 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+        <!--spring security 적용을 위한 라이브러리 추가-->
+        <!--spring security는 라이브러리 추가만으로 인증절차가 추가된다-->
+        <!-- Source:
+        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Spring Security를 위한 JSTL 라이브러리-->
+        <!-- Spring Security로 인증받은 토큰을 통해, JSP에서 인증,권한 제어 목적-->
+        <!-- Source:
+        https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- 파라미터 유효성 검사(@Valid)를 사용하기 위한 라이브러리 추가. -->
+        <!-- Source:
+        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- JSTL 사용을 위한 라이브러리 추가 -->
+        <!-- Source:
+        https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Source:
+        https://mvnrepository.com/artifact/org.glassfish.web/jakarta.servlet.jsp.jstl -->
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- JSP 호환을 위한 라이브러리 추가 -->
         <!-- Source:
         https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
-        <!-- JSP 호환을 위한 라이브러리 추가 -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.13.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Source:
+        https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.13.0</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Source:
+        https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.13.0</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -78,26 +150,7 @@
             <version>4.0.1</version>
             <scope>test</scope>
         </dependency>
-        
-        
-        <!-- JSTL 사용을 위한 라이브러리 추가-->
-        <!-- Source:
-        https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
-        <dependency>
-            <groupId>jakarta.servlet.jsp.jstl</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- Source:
-        https://mvnrepository.com/artifact/org.glassfish.web/jakarta.servlet.jsp.jstl -->
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
