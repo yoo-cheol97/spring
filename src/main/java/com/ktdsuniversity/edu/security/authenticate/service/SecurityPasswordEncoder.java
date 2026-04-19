@@ -33,13 +33,16 @@ public class SecurityPasswordEncoder implements PasswordEncoder {
 	 */
 	@Override
 	public boolean matches(@Nullable CharSequence rawPassword, @Nullable String encodedPassword) {
-		return false;
+		return false; // 기본 matches는 사용하지 않으므로 false 반환
 	}
 	
+	
+	// SHA256Util을 사용하여 비밀번호와 salt를 결합 후 암호화한다
 	public String encode(String rowPassword, String salt) {
 		return SHA256Util.getEncrypt(rowPassword, salt);
 	}
 	
+	// 입력된 비밀번호를 암호화한 후 DB 값과 비교하여 일치 여부를 반환한다
 	public boolean matches(String rowPassword, String salt, String encodedPassword) {
 		return this.encode(rowPassword, salt).equals(encodedPassword);
 	}

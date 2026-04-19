@@ -57,18 +57,21 @@ public class UsernameAndPasswordAuthenticationProvider implements Authentication
 		// UserDetails ==> SecurityUser
 		// username ==> 아이디
 		UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
-		if (!userDetails.isAccountNonLocked()) {
+		if (!userDetails.isAccountNonLocked()) { // 계정이 잠겨있는 경우 예외를 발생시킨다
 			throw new LockedException("아이디 또는 비밀번호가 일치하지 않습니다");
 		}
 		
+		// 로그인 요청에서 전달된 비밀번호를 가져옴
 		String rawPassword = authentication.getCredentials().toString();
 
 		MembersVO membersVO = ((SecurityUser) userDetails).getMembersVO();
 		
 		SecurityPasswordEncoder passwordComparator = (SecurityPasswordEncoder) this.passwordEncoder;
 		
+		// 입력된 비밀번호를 암호화하여 DB의 비밀번호와 비교한다
 		boolean isMatch = passwordComparator.matches(rawPassword, membersVO.getSalt(), userDetails.getPassword());
 		
+		// 비밀번호가 일치하지 않으면 인증 실패 예외를 발생시킨다
 		if (!isMatch) {
 			throw new BadCredentialsException("아이디 또는 비밀번호가 일치하지 않습니다");
 		}
