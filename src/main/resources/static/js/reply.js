@@ -46,7 +46,8 @@ $().ready(function () {
             replyDom
               .find(".reply-attach-files")
               .data("files", JSON.stringify(reply.files));
-            // reply.files를 반복하면서 a 태그를 ".reply-attach-files" 추가.
+            
+              // reply.files를 반복하면서 a 태그를 ".reply-attach-files" 추가.
             for (var j = 0; j < reply.files.length; j++) {
               var file = reply.files[j];
               var fileSize = file.fileLength; // bytes
@@ -240,6 +241,7 @@ $().ready(function () {
     formData.append("reply", replyContent);
     formData.append("articleId", articleId);
     formData.append("parentReplyId", parentReplyId);
+    formData.append("_csrf", $("meta[name='_csrf']").attr("content"));
 
     if (files.files.length > 0) {
       for (var i = 0; i < files.files.length; i++) {

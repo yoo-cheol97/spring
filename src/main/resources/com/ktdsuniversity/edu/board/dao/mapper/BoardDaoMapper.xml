@@ -207,7 +207,7 @@
 	</delete>
 	<update id="updateboardById" 
 	        parameterType="com.ktdsuniversity.edu.board.vo.request.UpdateVO">
-	UPDATE SPRING_BOOT.BOARD
+	UPDATE BOARD
        SET SUBJECT=#{subject}
          , CONTENT=#{content}
          , MDFY_DT= SYSDATE
