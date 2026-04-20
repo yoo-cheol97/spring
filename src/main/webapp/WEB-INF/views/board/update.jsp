@@ -14,7 +14,8 @@ pageEncoding="UTF-8"%>
       action="/update/${article.id}"
       enctype="multipart/form-data"
     >
-          <sec:csrfInput/>
+    <!-- post/put/delete 요청을 수행하려면 csrf토큰이 필요, 없으면 403, hidden input으로 토큰 자동생성 -->
+          <sec:csrfInput/> 
       <input type="hidden" name="fileGroupId" value="${article.fileGroupId}" />
       <div class="grid update" >
         <label for="subject">제목</label>
