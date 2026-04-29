@@ -1,10 +1,13 @@
 package com.ktdsuniversity.edu.exceptions.handlers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,8 +15,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ktdsuniversity.edu.common.utils.AuthUtils;
+import com.ktdsuniversity.edu.common.utils.ServletUtils;
 import com.ktdsuniversity.edu.exceptions.HelloSpringApiException;
 import com.ktdsuniversity.edu.exceptions.HelloSpringException;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Spring Application에서 던져진 catch되지 않은 예외들을 처리하는 클래스
@@ -87,10 +96,37 @@ private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHand
 	}
 	
 	@ExceptionHandler(RuntimeException.class)
-	public String viewSystemErrorPage(RuntimeException re) {
+	public void viewSystemErrorPage(RuntimeException re) {
 		logger.error(re.getMessage(), re);
 		
-		return "errors/500";
-	}
+		HttpServletResponse response = ServletUtils.getResponse();
+		if (ServletUtils.isApiRequest()) {
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json");
+			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			
+			PrintWriter writer;
+			try {
+				writer = response.getWriter();
+				writer.append("{ \"error\": \"시스템 에러가 발생했습니다.\" }");
+				writer.flush();
+			} catch (IOException e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+		else {
+			HttpServletRequest request = ServletUtils.getRequest();
+			String viewPath = "/WEB-INF/views/members/login.jsp";
+			if (AuthUtils.isAuthenticated()) {
+				viewPath = "/WEB-INF/views/errors/500.jsp";
+			}
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(viewPath);
+			try {
+				requestDispatcher.forward(request, response);
+			} catch (ServletException | IOException e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
 
 }
